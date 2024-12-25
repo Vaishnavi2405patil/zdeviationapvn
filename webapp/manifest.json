@@ -1,0 +1,156 @@
+  {
+    "_version": "1.37.0",
+    "sap.app": {
+      "id": "zdeviationapvn",
+      "type": "application",
+      "i18n": "i18n/i18n.properties",
+      "applicationVersion": {
+        "version": "0.0.1"
+      },
+      "title": "{{appTitle}}",
+      "description": "{{appDescription}}",
+      "resources": "resources.json",
+      "sourceTemplate": {
+        "id": "@sap/generator-fiori:basic",
+        "version": "1.15.4",
+        "toolsId": "2cc166c3-d4e2-4f67-82e5-f77141f8b1b3"
+      },
+      "dataSources": {
+        "mainService": {
+          "uri": "/sap/opu/odata/sap/ZVECV_PURCHASE_ORDER_APPROVAL_SRV/",
+          "type": "OData",
+          "settings": {
+            "annotations": [],
+            "localUri": "localService/metadata.xml",
+            "odataVersion": "2.0"
+          }
+        }
+      }
+    },
+    "sap.ui": {
+      "technology": "UI5",
+      "icons": {
+        "icon": "",
+        "favIcon": "",
+        "phone": "",
+        "phone@2": "",
+        "tablet": "",
+        "tablet@2": ""
+      },
+      "deviceTypes": {
+        "desktop": true,
+        "tablet": true,
+        "phone": true
+      }
+    },
+    "sap.ui5": {
+      "flexEnabled": true,
+      "dependencies": {
+        "minUI5Version": "1.30.0",
+        "libs": {
+          "sap.m": {},
+          "sap.ui.core": {}
+
+
+        }
+      },
+      "contentDensities": {
+        "compact": true,
+        "cozy": true
+      },
+      "models": {
+        "i18n": {
+          "type": "sap.ui.model.resource.ResourceModel",
+          "settings": {
+            "bundleName": "zdeviationapvn.i18n.i18n"
+          }
+        },
+        "": {
+          "dataSource": "mainService",
+          "preload": true,
+          "settings": {}
+        }
+      },
+      "resources": {
+        "css": [{
+          "uri": "css/style.css"
+        }]
+      },
+      "routing": {
+        "config": {
+          "routerClass": "sap.m.routing.Router",
+          "viewType": "XML",
+          "async": true,
+          "viewPath": "zdeviationapvn.view",
+          "controlAggregation": "pages",
+          "controlId": "app",
+          "clearControlAggregation": false
+        },
+        "routes": [{
+         
+            "pattern": "",
+            "name": "FirstPage",
+            "target": [
+              "DeviationApprovalMaster"
+            ]
+          },
+          {
+            "pattern": "FirstPage1",
+            "name": "FirstPage1",
+            "target": [
+              "DeviationApprovalMaster"
+            ]
+          },
+          {
+            "name": "DeviationApprovalDetail",
+            "pattern": "DeviationApprovalDetail/{PO_No}/DeviationApprovalDetailSid/{Sid}/{Type}",
+            "target": [
+              "DeviationApprovalMaster",
+              "DeviationApprovalDetail"
+            ]
+          },
+          {
+            "name": "DeviationApprovalMaster",
+            "pattern": "DeviationApprovalMaster",
+            "target": [
+              "DeviationApprovalMaster",
+              "DeviationApprovalDetail"
+            ]
+          },
+          {
+            "name": "RouteSApp",
+            "pattern": "RouteSApp",
+            "target": [
+              "TargetSApp"
+            ]
+          }
+        ],
+        "targets": {
+          "DeviationApprovalMaster": {
+            "viewName": "DeviationApprovalMaster",
+            "controlAggregation": "masterPages",
+            "viewId": "idview"
+
+               },
+          "DeviationApprovalDetail": {
+            "viewName": "DeviationApprovalDetail",
+            "controlAggregation": "detailPages",
+             "viewId": "idview"
+          },
+          "TargetSApp": {
+            "viewType": "XML",
+            "transition": "slide",
+            "clearControlAggregation": false,
+            "viewId": "app",
+            "viewName": "SApp"
+          }
+        }
+      },
+      "rootView": {
+        "viewName": "zdeviationapvn.view.SApp",
+        "type": "XML",
+        "async": true,
+        "id": "app"
+      }
+    }
+  }

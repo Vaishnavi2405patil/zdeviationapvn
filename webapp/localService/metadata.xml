@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZVECV_PURCHASE_ORDER_APPROVAL_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <EntityType Name="FetchPreviousUserID" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EMAIL_ID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="USERID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="USERNAME" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="SelectedPOContent" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PoNo"/>
+                    <PropertyRef Name="CnPo"/>
+                </Key>
+                <Property Name="PoNo" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CnPo" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="VECV PO CN" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="UserApproval" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO"/>
+                </Key>
+                <Property Name="PO" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UserName" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:label="Character 100" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="POApprovalDate" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="POApprovalTime" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="VECV Purchase Order Time" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="POStatus" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV Purchase Order Status" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="POApprovalComments" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="PO Comment" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="UserRejection" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO"/>
+                </Key>
+                <Property Name="PO" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UserName" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:label="Character 100" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PORejectionDate" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PORejectionTime" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="VECV Purchase Order Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="POStatus" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV Purchase Order Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PORejectionComments" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="PO Comment" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POFinanceReleaseApprovers" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO"/>
+                </Key>
+                <Property Name="PO" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BName" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="PO Approver" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Name_First" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="First name" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Name_Last" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Last name" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POAttachments" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocumentID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocumentName" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocumentDate" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocumentTime" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocumentURL" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MimeType" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AttachedByUserID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AttachedByUserName" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POAttachmentContent" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="DocumentID"/>
+                </Key>
+                <Property Name="DocumentID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POSig1Check" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                    <PropertyRef Name="UserID"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UserID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ValidSig1" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Indicator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sig2Appr" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Indicator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="PODeviationDetails" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoType" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PO Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="VECV Purchase Order Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Vendor" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="VECV Purchase Order Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Type" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV PO Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Amount" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="2" sap:unicode="false" sap:label="VECV PO Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Currency" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="VECV Purchase Order Currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="PO_Status" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV Purchase Order Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="User_Dept" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="VECV PO Dept" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rush" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="VECV PO Dept" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POPdf" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                    <PropertyRef Name="CN_PO"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchase_Order" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CN_PO" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="VECV PO CN" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="MyPOApprovedList" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="UserID"/>
+                </Key>
+                <Property Name="UserID" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="PO Approver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoType" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Character Field Length = 10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_No" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="VECV Purchase Order Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Vendor" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="VECV Purchase Order Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Type" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV PO Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Amount" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="2" sap:unicode="false" sap:label="VECV PO Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Currency" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="VECV Purchase Order Currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="PO_Status" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV Purchase Order Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="User_Dept" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="VECV PO Dept" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rush" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="VECV PO Dept" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rush_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rush_Time" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="VECV Purchase Order Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Received_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Received_Time" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="VECV Purchase Order Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CN_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ValidateUser" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="UserID"/>
+                </Key>
+                <Property Name="UserID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Valid" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Indicator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="MyPODeviationList" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="UserID"/>
+                </Key>
+                <Property Name="UserID" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="PO Approver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoType" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Character Field Length = 10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_No" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="VECV Purchase Order Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Vendor" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="VECV Purchase Order Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Type" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV PO Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Amount" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="2" sap:unicode="false" sap:label="VECV PO Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Currency" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="VECV Purchase Order Currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="PO_Status" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV Purchase Order Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="User_Dept" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="VECV PO Dept" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rush" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="VECV PO Dept" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rush_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rush_Time" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="VECV Purchase Order Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Received_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Received_Time" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="VECV Purchase Order Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CN_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POProxyDetails" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                    <PropertyRef Name="UserID"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoType" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PO Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UserID" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="PO Approver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="VECV Purchase Order Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Vendor" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="VECV Purchase Order Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Type" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV PO Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Amount" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="2" sap:unicode="false" sap:label="VECV PO Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Currency" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="VECV Purchase Order Currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="PO_Status" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV Purchase Order Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="User_Dept" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="VECV PO Dept" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rush" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="VECV PO Dept" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="FetchSig2Name" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SIG2" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POProxyMatch" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                    <PropertyRef Name="UserID"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UserID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Valid" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Indicator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="CheckGenericUser" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="UserID"/>
+                </Key>
+                <Property Name="UserID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Generic" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="CheckOTP" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                    <PropertyRef Name="UserID"/>
+                    <PropertyRef Name="OTP"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UserID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OTP" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Valid" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="FetchGenericUserID" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="EMAIL_ID"/>
+                </Key>
+                <Property Name="EMAIL_ID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="USERID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="USERNAME" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="CoverNoteHeader" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CnNumb"/>
+                </Key>
+                <Property Name="CnNumb" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cover Note No" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plant" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Vendor" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Vendor Code" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="VendorNm" Type="Edm.String" MaxLength="200" sap:unicode="false" sap:label="Vendor Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EffDt" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Effactive Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ProvNo" Type="Edm.String" MaxLength="15" sap:unicode="false" sap:label="Provision No" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ComoPrd" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Commodity Period" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VpdcAttchYes" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="VPDC Attachment Yes - Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VpdcAttchment" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="VPDC Attachment File Name (Yes)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VpdcAttDocno" Type="Edm.String" MaxLength="25" sap:unicode="false" sap:label="Document" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VpdcAttchNo" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="VPDC Attachment No-Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VpdcAmdNoRes" Type="Edm.String" MaxLength="200" sap:unicode="false" sap:label="VPDC Attachment No Remark" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CstshtAttYes" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Cost Sheet Attachment Yes - Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CstshtYesAttach" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Cost Sheet Attachment File Name(Yes)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CstshtAttDocno" Type="Edm.String" MaxLength="25" sap:unicode="false" sap:label="Document" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CstshtAttNo" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Cost Sheet Attachment No -Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CstshtAttNorem" Type="Edm.String" MaxLength="200" sap:unicode="false" sap:label="Cost Sheet Attachment No- Remarks" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ProceitYes" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Proceit Flag (Yes)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ProceitYesUrl" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Proceit Flag URL" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ProceitNo" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Proceit Flag (No)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ProceitNoRem" Type="Edm.String" MaxLength="200" sap:unicode="false" sap:label="Proceit Flag Remarks" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DesignChangePlm" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Design Change PLM URL" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DesignChangeEco" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="ECO Copy" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DesignChgEcoDocno" Type="Edm.String" MaxLength="25" sap:unicode="false" sap:label="Document" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SupportingDoc1" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Supporting Doc 1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SupportDocn01" Type="Edm.String" MaxLength="25" sap:unicode="false" sap:label="Document" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SupportingDoc2" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Supporting Doc 2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SupportDocn02" Type="Edm.String" MaxLength="25" sap:unicode="false" sap:label="Document" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SupportingDoc3" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Supporting Doc 3" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SupportDocn03" Type="Edm.String" MaxLength="25" sap:unicode="false" sap:label="Document" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SupportingDoc4" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Supporting Doc 4" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SupportDocn04" Type="Edm.String" MaxLength="25" sap:unicode="false" sap:label="Document" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SupportingDoc5" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Supporting Doc 5" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SupportDocn05" Type="Edm.String" MaxLength="25" sap:unicode="false" sap:label="Document" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OptApprover1" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Optional Approver 1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OptAprrvId1" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Optional Approver 1 ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OptApprover2" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Optional Approver 2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OptAprrvId2" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Optional Approver 2 ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OptApprover3" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Optional Approver 3" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OptAprrvId3" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Optional Approver 3 ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PcmMat" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="PCM Material" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PcmMatId" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="PCM ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Signatory1" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Signatory 1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Signatory2" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Signatory 2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sign1Name" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Signatory 1 Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sign1Id" Type="Edm.String" MaxLength="35" sap:unicode="false" sap:label="Signatory 1 Id" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sign2Name" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Signatory 2 Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sign2Id" Type="Edm.String" MaxLength="35" sap:unicode="false" sap:label="Signatory 2 Id" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Purpose" Type="Edm.String" MaxLength="35" sap:unicode="false" sap:label="Purpose" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ReasonDriver" Type="Edm.String" MaxLength="200" sap:unicode="false" sap:label="Amendment Reason Dirver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ReasonRemark" Type="Edm.String" MaxLength="200" sap:unicode="false" sap:label="Amendment Remarks" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Negotiation" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Negotation" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ApproveStatus" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Approver Initiated" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Uname" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="User Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Erdat" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Created on" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Erzet" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BgData" Type="Edm.String" sap:unicode="false" sap:label="Background data" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="Changes" Relationship="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader_SAChange" FromRole="FromRole_CoverNoteHeader_SAChange" ToRole="ToRole_CoverNoteHeader_SAChange"/>
+                <NavigationProperty Name="ExcelData" Relationship="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader_ExcelData" FromRole="FromRole_CoverNoteHeader_ExcelData" ToRole="ToRole_CoverNoteHeader_ExcelData"/>
+                <NavigationProperty Name="Attachments" Relationship="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader_Attachments" FromRole="FromRole_CoverNoteHeader_Attachments" ToRole="ToRole_CoverNoteHeader_Attachments"/>
+                <NavigationProperty Name="WorkFlowData" Relationship="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader_WFData" FromRole="FromRole_CoverNoteHeader_WFData" ToRole="ToRole_CoverNoteHeader_WFData"/>
+            </EntityType>
+            <EntityType Name="CoverNoteWFData" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CnNumb"/>
+                    <PropertyRef Name="Ebeln"/>
+                    <PropertyRef Name="Ebelp"/>
+                    <PropertyRef Name="Chnumber"/>
+                    <PropertyRef Name="Chdate"/>
+                </Key>
+                <Property Name="CnNumb" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cover Note No" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Ebeln" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Ebelp" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Item" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Chnumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Document Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Chdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Document Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Lifnr" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Werks" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Matnr" Type="Edm.String" MaxLength="18" sap:unicode="false" sap:label="Material" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Reason" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Reason Why Characteristic is Not Displayed" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Oprice" Type="Edm.String" MaxLength="11" sap:unicode="false" sap:label="Old Price" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Nprice" Type="Edm.String" MaxLength="11" sap:unicode="false" sap:label="Net New Price" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Efdate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Document Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Purpose" Type="Edm.String" MaxLength="35" sap:unicode="false" sap:label="Purpose" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ApproveStatus" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Approver Initiated" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Uname" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="User Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Erdat" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Created on" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Erzet" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="CoverNoteHeader" Relationship="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader_WFData" FromRole="ToRole_CoverNoteHeader_WFData" ToRole="FromRole_CoverNoteHeader_WFData"/>
+            </EntityType>
+            <EntityType Name="CoverNoteAttachment" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CnNumb"/>
+                    <PropertyRef Name="DocumentNo"/>
+                </Key>
+                <Property Name="CnNumb" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cover Note No" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="DocumentNo" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="Document" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="DocumentType" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="Document Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocumentPart" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="Document Part" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocumentVer" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Doc. Version" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FileName" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="FILE_NAME" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PathName" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="PATH_NAME" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="User Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CreatedOn" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Created on" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CreatedTm" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="CoverNoteExcel" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CnNumb"/>
+                    <PropertyRef Name="CmdVeh"/>
+                    <PropertyRef Name="Counter"/>
+                </Key>
+                <Property Name="CnNumb" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cover Note No" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="CmdVeh" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Commodity Or Vechical" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Counter" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Counter" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Column1" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Column1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Column2" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Column1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Column3" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Column1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Column4" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Column1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Column5" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Column1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Column6" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Column1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Column7" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Column1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Column8" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Column1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Column9" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Column1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Column10" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Column1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="CoverNoteChange" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Chnumber"/>
+                    <PropertyRef Name="Chdate"/>
+                    <PropertyRef Name="Ebeln"/>
+                    <PropertyRef Name="Ebelp"/>
+                </Key>
+                <Property Name="Chnumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Document Number" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Chdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Document Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Ebeln" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Ebelp" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Item" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Oprice" Type="Edm.String" MaxLength="11" sap:unicode="false" sap:label="Old Price" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Nprice" Type="Edm.String" MaxLength="11" sap:unicode="false" sap:label="Net New Price" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Efdate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Document Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Flag" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Updation Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Remarks" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Remarks" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Costdriver" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Cost drivers" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Hrkft" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="Origin group" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CostingCell" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="Costing Cell" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Variance" Type="Edm.Decimal" Precision="14" Scale="3" sap:unicode="false" sap:label="Variance" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AmendDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Date of Amendment" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AmendErnam" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="Amendment user" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Matnr" Type="Edm.String" MaxLength="18" sap:unicode="false" sap:label="Material" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ReqErnam" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="User name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Reason" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Reason" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ActDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Actual amend date by FI" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="GrossWeight" Type="Edm.Decimal" Precision="13" Scale="3" sap:unicode="false" sap:label="Gross Weight" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ScrapWeight" Type="Edm.Decimal" Precision="13" Scale="3" sap:unicode="false" sap:label="Gross Weight" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NetWeight" Type="Edm.Decimal" Precision="13" Scale="3" sap:unicode="false" sap:label="Net Weight" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Bukrs" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="Company Code" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Werks" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Lifnr" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kschl" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="Condition Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kbetr" Type="Edm.Decimal" Precision="12" Scale="3" sap:unicode="false" sap:label="Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Konwa" Type="Edm.String" MaxLength="5" sap:unicode="false" sap:label="Cond. currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="Kpein" Type="Edm.Decimal" Precision="8" Scale="3" sap:unicode="false" sap:label="Pricing unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kmein" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="Unit of measure" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="CnNumb" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Cover Note No" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ApproveStatus" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Approver Initiated" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="CoverNotePdf" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CnNumb"/>
+                </Key>
+                <Property Name="CnNumb" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cover Note" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="MyPOList" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="UserID"/>
+                </Key>
+                <Property Name="UserID" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="PO Approver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoType" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PO|SA|CHANGE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_No" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="VECV Purchase Order Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Vendor" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="VECV Purchase Order Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Type" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV PO Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Amount" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="2" sap:unicode="false" sap:label="VECV PO Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Currency" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="VECV Purchase Order Currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="PO_Status" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV Purchase Order Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="User_Dept" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="VECV PO Dept" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rush" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="VECV PO Dept" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rush_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rush_Time" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="VECV Purchase Order Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Received_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Received_Time" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="VECV Purchase Order Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CN_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="PurchaseOrderGeneral" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                    <PropertyRef Name="UserID"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UserID" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="PO Approver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="VECV Purchase Order Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Vendor" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="VECV Purchase Order Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Type" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV PO Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Description" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="VECV Purchase Order Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Initiator" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="VECV Purchase Order Initiator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PO_Status" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV Purchase Order Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CN_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POComments" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO"/>
+                </Key>
+                <Property Name="PO" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UserName" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:label="Character 100" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="POApprovalDate" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="POApprovalTime" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="VECV Purchase Order Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="POStatus" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="VECV Purchase Order Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="POComment" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="PO Comment" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POQuery" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query_From" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="PO Approver" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query_To" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="PO Approver" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query_Time" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="VECV Purchase Order Time" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query_Text" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="PO Query" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query_To_EmailID" Type="Edm.String" Nullable="false" MaxLength="241" sap:unicode="false" sap:label="E-Mail Address" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POQueryHistory" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PO_NO"/>
+                </Key>
+                <Property Name="PO_NO" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query_From" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="VECV Purchase Order Query From" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query_To" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="VECV Purchase Order Query To" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query_Date" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV PO Query Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query_Time" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="VECV Purchase Order Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query_Status" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="VECV Purchase Order Query Text" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Query" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="PO Query" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ApproverDept" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="UserID"/>
+                </Key>
+                <Property Name="UserID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Dept" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="UserSearch" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Bname"/>
+                </Key>
+                <Property Name="Bname" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NameFirst" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NameLast" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POSuperUser" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="User"/>
+                </Key>
+                <Property Name="User" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="User" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Flag" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <Association Name="CoverNoteHeader_Attachments" sap:content-version="1">
+                <End Type="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader" Multiplicity="0..1" Role="FromRole_CoverNoteHeader_Attachments"/>
+                <End Type="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteAttachment" Multiplicity="*" Role="ToRole_CoverNoteHeader_Attachments"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_CoverNoteHeader_Attachments">
+                        <PropertyRef Name="CnNumb"/>
+                    </Principal>
+                    <Dependent Role="ToRole_CoverNoteHeader_Attachments">
+                        <PropertyRef Name="CnNumb"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="CoverNoteHeader_ExcelData" sap:content-version="1">
+                <End Type="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader" Multiplicity="0..1" Role="FromRole_CoverNoteHeader_ExcelData"/>
+                <End Type="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteExcel" Multiplicity="*" Role="ToRole_CoverNoteHeader_ExcelData"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_CoverNoteHeader_ExcelData">
+                        <PropertyRef Name="CnNumb"/>
+                    </Principal>
+                    <Dependent Role="ToRole_CoverNoteHeader_ExcelData">
+                        <PropertyRef Name="CnNumb"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="CoverNoteHeader_SAChange" sap:content-version="1">
+                <End Type="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader" Multiplicity="0..1" Role="FromRole_CoverNoteHeader_SAChange"/>
+                <End Type="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteChange" Multiplicity="*" Role="ToRole_CoverNoteHeader_SAChange"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_CoverNoteHeader_SAChange">
+                        <PropertyRef Name="CnNumb"/>
+                    </Principal>
+                    <Dependent Role="ToRole_CoverNoteHeader_SAChange">
+                        <PropertyRef Name="CnNumb"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="CoverNoteHeader_WFData" sap:content-version="1">
+                <End Type="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader" Multiplicity="0..1" Role="FromRole_CoverNoteHeader_WFData"/>
+                <End Type="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteWFData" Multiplicity="*" Role="ToRole_CoverNoteHeader_WFData"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_CoverNoteHeader_WFData">
+                        <PropertyRef Name="CnNumb"/>
+                    </Principal>
+                    <Dependent Role="ToRole_CoverNoteHeader_WFData">
+                        <PropertyRef Name="CnNumb"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZVECV_PURCHASE_ORDER_APPROVAL_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="FetchPreviousUserIDSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.FetchPreviousUserID" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="SelectedPOContentSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.SelectedPOContent" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="UserApprovalSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.UserApproval" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="UserRejectionSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.UserRejection" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POFinanceReleaseApproversSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.POFinanceReleaseApprovers" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POAttachmentsSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.POAttachments" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POAttachmentContentSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.POAttachmentContent" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POSig1CheckSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.POSig1Check" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="PODeviationDetailsSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.PODeviationDetails" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POPdfSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.POPdf" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="MyPOApprovedListSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.MyPOApprovedList" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ValidateUserSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.ValidateUser" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="MyPODeviationListSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.MyPODeviationList" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POProxyDetailsSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.POProxyDetails" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="FetchSig2NameSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.FetchSig2Name" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POProxyMatchSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.POProxyMatch" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="CheckGenericUserSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CheckGenericUser" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="CheckOTPSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CheckOTP" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="FetchGenericUserIDSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.FetchGenericUserID" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="CoverNoteHeaderSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CoverNoteWFDataSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteWFData" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CoverNoteAttachmentSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteAttachment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CoverNoteExcelSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteExcel" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CoverNoteChangeSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteChange" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CoverNotePdfSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNotePdf" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="MyPOListSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.MyPOList" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="PurchaseOrderGeneralSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.PurchaseOrderGeneral" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POCommentsSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.POComments" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POQuerySet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.POQuery" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POQueryHistorySet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.POQueryHistory" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ApproverDeptSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.ApproverDept" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="UserSearchSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.UserSearch" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POSuperUserSet" EntityType="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.POSuperUser" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <AssociationSet Name="CoverNoteHeader_AttachmentsSet" Association="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader_Attachments" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CoverNoteHeaderSet" Role="FromRole_CoverNoteHeader_Attachments"/>
+                    <End EntitySet="CoverNoteAttachmentSet" Role="ToRole_CoverNoteHeader_Attachments"/>
+                </AssociationSet>
+                <AssociationSet Name="CoverNoteHeader_WFDataSet" Association="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader_WFData" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CoverNoteHeaderSet" Role="FromRole_CoverNoteHeader_WFData"/>
+                    <End EntitySet="CoverNoteWFDataSet" Role="ToRole_CoverNoteHeader_WFData"/>
+                </AssociationSet>
+                <AssociationSet Name="CoverNoteHeader_SAChangeSet" Association="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader_SAChange" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CoverNoteHeaderSet" Role="FromRole_CoverNoteHeader_SAChange"/>
+                    <End EntitySet="CoverNoteChangeSet" Role="ToRole_CoverNoteHeader_SAChange"/>
+                </AssociationSet>
+                <AssociationSet Name="CoverNoteHeader_ExcelDataSet" Association="ZVECV_PURCHASE_ORDER_APPROVAL_SRV.CoverNoteHeader_ExcelData" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CoverNoteHeaderSet" Role="FromRole_CoverNoteHeader_ExcelData"/>
+                    <End EntitySet="CoverNoteExcelSet" Role="ToRole_CoverNoteHeader_ExcelData"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link rel="self" href="http://vedevs4pas.vecvnet.com:8000/sap/opu/odata/sap/ZVECV_PURCHASE_ORDER_APPROVAL_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://vedevs4pas.vecvnet.com:8000/sap/opu/odata/sap/ZVECV_PURCHASE_ORDER_APPROVAL_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
