@@ -2,10 +2,10 @@ sap.ui.define(
     [
         "sap/ui/core/mvc/Controller"
     ],
-    function(BaseController) {
+    function(Controller) {
       "use strict";
   
-      return BaseController.extend("zdeviationapvn.controller.SApp", {
+      return Controller.extend("zdeviationapvn.controller.SApp", {
         onInit: function() {
         }
       });

@@ -23,4 +23,4 @@ sap.ui.define(
 
 	return Formatter;
 
-})
+},  /* bExport= */ true);

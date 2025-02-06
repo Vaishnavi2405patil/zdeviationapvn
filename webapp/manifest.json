@@ -128,14 +128,12 @@
         "targets": {
           "DeviationApprovalMaster": {
             "viewName": "DeviationApprovalMaster",
-            "controlAggregation": "masterPages",
-            "viewId": "idview"
+            "controlAggregation": "masterPages"
 
                },
           "DeviationApprovalDetail": {
             "viewName": "DeviationApprovalDetail",
-            "controlAggregation": "detailPages",
-             "viewId": "idview"
+            "controlAggregation": "detailPages"
           },
           "TargetSApp": {
             "viewType": "XML",
