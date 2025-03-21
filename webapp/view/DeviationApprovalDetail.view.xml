@@ -12,10 +12,20 @@
     <App>
         <pages>
             <Page
-                title="Volvo Eicher Commercial Vehicles Purchase Order Approval"
                 navButtonPress="handleNavButtonPress"
                 showNavButton="{device>/system/phone}"
             >
+                <customHeader>
+                    <Toolbar>
+                        <content>
+                            <Title
+                                class="myCustom"
+                                text="VE Commercial Vehicles Purchase Order Approval"
+                            />
+                            <ToolbarSpacer />
+                        </content>
+                    </Toolbar>
+                </customHeader>
                 <content>
                     <Text
                         id="idSelection"
@@ -46,6 +56,7 @@
                                 icon="sap-icon://pdf-attachment"
                                 text="Cover Note"
                                 key="CoverNote"
+                                iconColor="Negative"
                             >
                                 <core:HTML id="idFrame" />
                             </IconTabFilter>
@@ -53,6 +64,7 @@
                                 icon="sap-icon://pdf-attachment"
                                 text="Purch.Order/Change"
                                 key="PurchaseOrder"
+                                iconColor="Negative"
                             >
                                 <core:HTML id="idFramePO" />
                             </IconTabFilter>
@@ -60,6 +72,7 @@
                                 text="Cost Details"
                                 key="Attachments"
                                 icon="sap-icon://attachment"
+                                iconColor="Negative"
                             >
                                 <UploadCollection
                                     id="UploadCollection"
@@ -143,6 +156,7 @@
                                 text="Query History"
                                 key="QueryHistory"
                                 icon="sap-icon://history"
+                                iconColor="Negative"
                             >
                                 <Table
                                     id="tblQueryHistory"
@@ -215,6 +229,7 @@
                                 text="Appr.Comments"
                                 key="Comments"
                                 icon="sap-icon://comment"
+                                iconColor="Negative"
                             >
                                 <Table
                                     id="tblComments"
@@ -276,6 +291,7 @@
                                 text="General"
                                 key="General"
                                 icon="sap-icon://message-information"
+                                iconColor="Negative"
                             >
                                 <l:Grid
                                     class="sapUiSmallMarginTop"
@@ -312,21 +328,21 @@
                                                         visible="false"
                                                     />
                                                     <Label
-                                                        text="PO No/Chg No"
+                                                        text="PO No/Chg No "
                                                         id="lblPUrOrNo"
                                                     />
                                                     <Text id="PurOrdNo" />
                                                     <Label
-                                                        text="PO Description"
+                                                        text="PO Description "
                                                     />
                                                     <Text id="PurOrdDesc" />
                                                     <Label
-                                                        text="PO/AMND Initiator"
+                                                        text="PO/AMND Initiator "
                                                     />
                                                     <Text id="PurOrdInt" />
-                                                    <Label text="Vendor Name" />
+                                                    <Label text="Vendor Name " />
                                                     <Text id="PurOrdVendor" />
-                                                    <Label text="CN Date" />
+                                                    <Label text="CN Date " />
                                                     <Text id="idCnDate" />
                                                 </f:content>
                                             </f:SimpleForm>
@@ -360,15 +376,15 @@
                                                 singleContainerFullSize="false"
                                             >
                                                 <f:content>
-                                                    <Label text="Plant Name" />
+                                                    <Label text="Plant Name " />
                                                     <Text id="idPlant" />
                                                     <Label
-                                                        text="Document Type"
+                                                        text="Document Type "
                                                     />
                                                     <Text id="PurDocType" />
-                                                    <Label text="PO Date" />
+                                                    <Label text="PO Date " />
                                                     <Text id="PurOrdDt" />
-                                                    <Label text="PO Status" />
+                                                    <Label text="PO Status " />
                                                     <Text id="PurOrdSts" />
                                                 </f:content>
                                             </f:SimpleForm>

@@ -13,15 +13,13 @@ builder:
     - name: deploy-to-abap
       afterTask: generateCachebusterInfo
       configuration:
-      
-
         target:
           url: http://vedevs4pas.vecvnet.com:8000
-          client: '120'
+          client: "120"
         app:
           name: ZDEVIATIONAPVN
           description: Deviation Approval App
           package: zpoapproval
-          transport: ECDK9A0ABT
+          transport: ECDK9A0DGS
         exclude:
           - /test/
