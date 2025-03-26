@@ -340,7 +340,9 @@
                                                         text="PO/AMND Initiator "
                                                     />
                                                     <Text id="PurOrdInt" />
-                                                    <Label text="Vendor Name " />
+                                                    <Label
+                                                        text="Vendor Name "
+                                                    />
                                                     <Text id="PurOrdVendor" />
                                                     <Label text="CN Date " />
                                                     <Text id="idCnDate" />
